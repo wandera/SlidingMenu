@@ -1,4 +1,6 @@
 apply plugin: 'com.android.library'
+archivesBaseName = 'sliding_menu'
+version = 1.0
 
 buildscript {
     repositories {
@@ -36,6 +38,14 @@ android {
             assets.srcDirs = ['assets']
 
             manifest.srcFile 'AndroidManifest.xml'
+        }
+    }
+
+    libraryVariants.all { variant ->
+        variant.outputs.all { output ->
+            if (outputFile != null && outputFileName.endsWith('.aar')) {
+                outputFileName = "${archivesBaseName}-${version}.aar"
+            }
         }
     }
 
