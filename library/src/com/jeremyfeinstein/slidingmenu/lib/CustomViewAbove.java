@@ -219,7 +219,6 @@ public class CustomViewAbove extends ViewGroup {
     }
 
     void setCurrentItemInternal(int item, boolean smoothScroll, boolean always, int velocity) {
-        Log.e(SlidingMenu.class.getSimpleName(), "internal item: " + item);
         if (!always && mCurItem == item) {
             setScrollingCacheEnabled(false);
             return;
@@ -442,7 +441,6 @@ public class CustomViewAbove extends ViewGroup {
 
     public void setWindowBackground(@DrawableRes int windowBackgroundRes) {
         windowBackground = getResources().getDrawable(windowBackgroundRes);
-        Log.e(SlidingMenu.class.getSimpleName(), "bg drawable: " + windowBackground);
     }
 
     public View getContent() {
@@ -822,7 +820,6 @@ public class CustomViewAbove extends ViewGroup {
     }
 
     private void showBackground(boolean show) {
-        Log.e(SlidingMenu.class.getSimpleName(), "set background: " + show);
         mContent.setBackground(show ? windowBackground : null);
     }
 
