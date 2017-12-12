@@ -3,7 +3,6 @@ apply plugin: 'com.jfrog.artifactory'
 apply plugin: 'maven-publish'
 
 def packageName = 'com.jeremyfeinstein.slidingmenu.lib'
-def libraryVersion = '1.2'
 
 buildscript {
     repositories {
@@ -25,18 +24,16 @@ android {
         minSdkVersion 17
         targetSdkVersion 22
         archivesBaseName = "sliding-menu"
-        println "defaultConfig set"
+        version "1.2"
     }
 
     buildTypes {
         release {
             minifyEnabled true
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.txt'
-            println "release set"
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
         debug {
             minifyEnabled false
-            println "debug set"
         }
     }
 
@@ -59,8 +56,7 @@ android {
             if (outputFile != null && outputFileName.endsWith('.aar')) {
                 // LibraryVariant object does not have #versionNameSuffix
                 def suffix = variant.baseName == "debug" ? "-SNAPSHOT" : ""
-                println "suffix: " + suffix
-                outputFileName = "${archivesBaseName}-${libraryVersion}${suffix}.aar"
+                outputFileName = "${archivesBaseName}-${version}${suffix}.aar"
                 println "outputFileName: " + outputFileName
             }
         }
@@ -79,18 +75,17 @@ publishing {
                 username "${artifactory_user}"
                 password "${artifactory_password}"
             }
-            url "${artifactory_contextUrl}/libs-snapshot-local"
+            url "${artifactory_contextUrl}/libs-release-local"
         }
     }
     publications {
         aar(MavenPublication) {
             groupId = packageName
-            version = libraryVersion
             artifactId = archivesBaseName
-            println "publishing: " + "$buildDir/outputs/aar/${archivesBaseName}-${libraryVersion}-SNAPSHOT.aar"
+            def targetFile = "$buildDir/outputs/aar/${archivesBaseName}-${version}.aar"
+            println "publishing: " + targetFile
             // Tell maven to prepare the generated "*.aar" file for publishing
-            artifact("$buildDir/outputs/aar/${archivesBaseName}-${libraryVersion}-SNAPSHOT.aar")
-
+            artifact(targetFile)
         }
     }
 }
