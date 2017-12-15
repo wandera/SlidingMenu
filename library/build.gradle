@@ -1,13 +1,17 @@
 apply plugin: 'com.android.library'
-archivesBaseName = 'sliding_menu'
-version = 1.2
+apply plugin: 'com.jfrog.artifactory'
+apply plugin: 'maven-publish'
+
+def packageName = 'com.jeremyfeinstein.slidingmenu.lib'
 
 buildscript {
     repositories {
-        mavenCentral()
+        jcenter()
+        maven { url 'https://maven.google.com' }
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:3.0.0'
+        classpath "org.jfrog.buildinfo:build-info-extractor-gradle:4.5.4"
     }
 }
 
@@ -19,12 +23,17 @@ android {
     defaultConfig {
         minSdkVersion 17
         targetSdkVersion 22
+        archivesBaseName = "sliding-menu"
+        version "1.2"
     }
 
     buildTypes {
         release {
+            minifyEnabled true
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+        debug {
             minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.txt'
         }
     }
 
@@ -42,9 +51,13 @@ android {
     }
 
     libraryVariants.all { variant ->
+        println "variant: " + variant.baseName
         variant.outputs.all { output ->
             if (outputFile != null && outputFileName.endsWith('.aar')) {
-                outputFileName = "${archivesBaseName}-${version}.aar"
+                // LibraryVariant object does not have #versionNameSuffix
+                def suffix = variant.baseName == "debug" ? "-SNAPSHOT" : ""
+                outputFileName = "${archivesBaseName}-${version}${suffix}.aar"
+                println "outputFileName: " + outputFileName
             }
         }
     }
@@ -52,5 +65,28 @@ android {
 }
 
 dependencies {
-    compile 'com.android.support:support-v4:25.3.1'
+    implementation 'com.android.support:support-v4:25.3.1'
 }
+
+publishing {
+    repositories {
+        maven {
+            credentials {
+                username "${artifactory_user}"
+                password "${artifactory_password}"
+            }
+            url "${artifactory_contextUrl}/libs-release-local"
+        }
+    }
+    publications {
+        aar(MavenPublication) {
+            groupId = packageName
+            artifactId = archivesBaseName
+            def targetFile = "$buildDir/outputs/aar/${archivesBaseName}-${version}.aar"
+            println "publishing: " + targetFile
+            // Tell maven to prepare the generated "*.aar" file for publishing
+            artifact(targetFile)
+        }
+    }
+}
+
