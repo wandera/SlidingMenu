@@ -2,7 +2,7 @@ apply plugin: 'com.android.library'
 apply plugin: 'com.jfrog.artifactory'
 apply plugin: 'maven-publish'
 
-def packageName = 'com.jeremyfeinstein.slidingmenu.lib'
+def packageName = 'com.wandera.android'
 
 buildscript {
     repositories {
@@ -83,7 +83,7 @@ publishing {
             groupId = packageName
             artifactId = archivesBaseName
             def targetFile = "$buildDir/outputs/aar/${archivesBaseName}-${version}.aar"
-            println "publishing: " + targetFile
+            println "publish source: " + targetFile
             // Tell maven to prepare the generated "*.aar" file for publishing
             artifact(targetFile)
         }
