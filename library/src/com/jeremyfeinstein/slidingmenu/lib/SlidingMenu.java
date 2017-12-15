@@ -223,7 +223,7 @@ public class SlidingMenu extends RelativeLayout {
 
             public void onPageSelected(int position) {
                 // position 1 == closed
-                Log.e(SlidingMenu.class.getSimpleName(), "               page selected: " + position);
+                Log.d(SlidingMenu.class.getSimpleName(), "page selected: " + position);
                 if (position == POSITION_OPEN && mOpenListener != null) {
                     mOpenListener.onOpen();
                 } else if (position == POSITION_CLOSE && mCloseListener != null) {
