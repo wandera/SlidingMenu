@@ -72,15 +72,6 @@ dependencies {
 }
 
 publishing {
-    repositories {
-        maven {
-            credentials {
-                username "${artifactory_user}"
-                password "${artifactory_password}"
-            }
-            url "${artifactory_contextUrl}/libs-release-local"
-        }
-    }
     publications {
         aar(MavenPublication) {
             groupId = packageName
