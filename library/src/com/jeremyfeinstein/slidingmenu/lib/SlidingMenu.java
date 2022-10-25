@@ -759,7 +759,7 @@ public class SlidingMenu extends RelativeLayout {
      * @param resId the resource ID of the new shadow drawable
      */
     public void setShadowDrawable(int resId) {
-        setShadowDrawable(getContext().getResources().getDrawable(resId));
+        setShadowDrawable(getContext().getResources().getDrawable(resId, null));
     }
 
     /**
@@ -777,7 +777,7 @@ public class SlidingMenu extends RelativeLayout {
      * @param resId the resource ID of the new shadow drawable
      */
     public void setSecondaryShadowDrawable(int resId) {
-        setSecondaryShadowDrawable(getContext().getResources().getDrawable(resId));
+        setSecondaryShadowDrawable(getContext().getResources().getDrawable(resId, null));
     }
 
     /**
