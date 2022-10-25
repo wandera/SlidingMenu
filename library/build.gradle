@@ -23,7 +23,7 @@ repositories {
 android {
     compileSdkVersion 28
     defaultConfig {
-        minSdkVersion 17
+        minSdkVersion 21
         targetSdkVersion 26
         archivesBaseName = "sliding-menu"
         version "1.4"
