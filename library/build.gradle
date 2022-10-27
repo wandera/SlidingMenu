@@ -72,6 +72,12 @@ dependencies {
 }
 
 publishing {
+    repositories {
+        maven {
+            url "https://artifactory.jamf.build/artifactory/libs-release/libs-release-local"
+        }
+    }
+
     publications {
         aar(MavenPublication) {
             groupId = packageName
