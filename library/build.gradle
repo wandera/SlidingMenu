@@ -74,7 +74,7 @@ dependencies {
 publishing {
     repositories {
         maven {
-            url "https://artifactory.jamf.build/artifactory/libs-release/libs-release-local"
+            url "https://artifactory.jamf.build/artifactory/libs-release-local"
         }
     }
 
